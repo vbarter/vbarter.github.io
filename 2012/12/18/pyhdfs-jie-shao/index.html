@@ -1,0 +1,666 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="点点滴滴，天道酬勤" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      baidu: '3d497527feb7a379c4f7e2940b92caa1',
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript" src="/js/analytics_baidu-analytics.js"></script>
+
+
+
+  <title> Pyhdfs 介绍 // vbarter's blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">vbarter's blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Pyhdfs 介绍
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2012-12-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/hadoop-hdfs-python/">hadoop hdfs python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2012/12/18/pyhdfs-jie-shao/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/18/pyhdfs-jie-shao/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>开源一个和hadoop相关的python lib，希望能更多的人收益。</p>
+<h2 id="pyhdfs是什么?">pyhdfs是什么?</h2><p>pyhdfs是对libhdfs的python封装库. 它提供了一些常用方法来处理HDFS上的文件和目录, 比如读写文件, 枚举目录文件, 显示HDFS可用空间, 显示文件的复制块数等</p>
+<h2 id="pyhdfs和libhdfs的关系">pyhdfs和libhdfs的关系</h2><p>libhdfs 是HDFS的底层C函数库, 由hadoop官方提供, pyhdfs使用swig技术, 对libhdfs提供的绝大多数函数进行了封装, 目的是提供更简单的调用方式.</p>
+<h2 id="为什么需要pyhdfs?">为什么需要pyhdfs?</h2><p>hadoop 集群提供我们计算和存储, 计算基于map/reduce模式, 存储基于HDFS, 所有的文件都存储在HDFS中, 虽然有HDFS Shell可以简单访问HDFS的文件,其灵活性不如访问本地文件系统. 比如过滤一些具有日期格式的文件名,并把他们归类压缩打包, 在HDFS上的某文件中更改某行内容等等, 光靠HDFS Shell就显得不方便了. 本文将介绍另外一种方法, 不需要挂载VFS, 通过脚本调用HDFS底层接口, 直接访问HDFS上的文件. 这就是pyhdfs的功能.</p>
+<h2 id="如何获取安装?">如何获取安装?</h2><ul>
+<li><p>git clone <a href="https://github.com/vbarter/pyhdfs.git" target="_blank" rel="external">https://github.com/vbarter/pyhdfs.git</a></p>
+</li>
+<li><p>先编译安装swig, 最新版本是2.0.9</p>
+</li>
+<li><p>可不安装pcre（perl的正则表达库）</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.<span class="regexp">/configure --prefix=/</span>home<span class="regexp">/work/</span>opdir<span class="regexp">/software/</span>swig --without-pcre</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改pyhdfs下的Makefile</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">50</span>行，LIBHDFS_BUILD_DIR 修改为发布地址</span><br><span class="line"><span class="number">55</span>行，<span class="keyword">python</span>依赖修改</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行compile.sh</p>
+</li>
+</ul>
+<h2 id="pyhdfs和libhdfs的使用区别">pyhdfs和libhdfs的使用区别</h2><p>为了说明pyhdfs和libhdfs的难易区别, 下面请看一个列子,两种方法实现读取一个目录下所有的文件名信息.</p>
+<p>libhdfs:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "hdfs.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">      dfsFS fs = hdfsConnectAsUser(<span class="string">"hadoop ugi"</span>,<span class="number">64310</span>,<span class="string">"username"</span>,<span class="string">"password"</span>);</span><br><span class="line"></span><br><span class="line">      hdfsFileInfo *fileList = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> numEntries = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">if</span>((fileList = hdfsListDirectory(fs, <span class="string">"/user/ns-lsp/logs/"</span>, &amp;numEntries)) != NULL) &#123;</span><br><span class="line">           <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">for</span>(i=<span class="number">0</span>; i &lt; numEntries; ++i) &#123;</span><br><span class="line">                     <span class="built_in">printf</span>(<span class="string">"Name: %s, "</span>, fileList[i].mName);</span><br><span class="line">           &#125;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno) &#123;</span><br><span class="line">                     totalResult++;</span><br><span class="line">                     <span class="built_in">printf</span>(<span class="string">"waah! hdfsListDirectory - FAILED!\n"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     <span class="built_in">printf</span>(<span class="string">"Empty directory!\n"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">           &#125;</span><br><span class="line">      hdfsDisconnect(fs);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>pyhdfs:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import hadoop</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"hadoop ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">    ds = fs.<span class="function"><span class="title">listDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">    <span class="keyword">for</span> <span class="tag">i</span> <span class="keyword">in</span> ds:</span><br><span class="line">        print <span class="tag">i</span><span class="class">.mName</span></span><br><span class="line">    fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>从上看出, pyhdfs比起libhdfs使用更加简单,  也许有人会说, 利用hadoop fs -ls /user/ns-lsp/logs 同样可以显示出所有的文件,不是更加简单么? 但是如果我要在某些特定文件比如20090630的文件中写入”finish”字符串, 就比较麻烦了.</p>
+<h2 id="pyhdfs的使用说明">pyhdfs的使用说明</h2><p>下面,对pyhdfs中提供的所有方法进行示例说明, pyhdfs模块主要包含了两个类,.<br>一个是HadoopDFS, 提供了对HDFS的访问处理函数, 包括:</p>
+<ul>
+<li>connect(): 连接函数</li>
+<li>disconnect(): 断开连接</li>
+<li>getCapacity(): 取得文件系统的容量</li>
+<li>getUsed(): 取得当前文件系统的文件总大小</li>
+<li>getWorkingDirectory(): 获得当前工作目录</li>
+<li>setWorkingDirectory(): 设置当前工作目录</li>
+<li>createDirectory(): 创建一个目录</li>
+<li>copy(): 拷贝一个文件/目录</li>
+<li>move(): 移动一个文件/目录</li>
+<li>delete(): 删除一个文件/目录</li>
+<li>rename(): 重命名一个文件/目录</li>
+<li>listDirectory(): 显示目录下的所有文件/目录</li>
+<li>pathExists(): 判断目录是否存在</li>
+<li>getDefaultBlockSize(): 获得默认文件块大小.</li>
+<li>chmod(): 改变文件/目录权限</li>
+<li>chown(): 设置文件/目录属主</li>
+<li>getHosts(): 获得当前块所在的具体服务器名</li>
+<li>getPathInfo(): 获得文件/路径信息</li>
+<li>setReplication(): 设置文件/路径的复制数</li>
+</ul>
+<p>另一个是HadoopFile, 提供了对HDFS中文件的访问处理函数. 包括：</p>
+<ul>
+<li><strong>init</strong>(): 初始化一个文件，并打开</li>
+<li>close(): 关闭一个文件</li>
+<li>read(): 从文件中读取数据</li>
+<li>readPos(): 从文件的指定位置读取len长度数据</li>
+<li>write(): 写数据到文件</li>
+<li>flush(): 输出数据</li>
+<li>seek(): 偏移到文件的指定位置</li>
+<li>tell(): 获得当前偏移位置</li>
+<li>available(): 获取当前文件可读字节数</li>
+</ul>
+<p>下面分别介绍:</p>
+<h3 id="如何连接hadoop集群？">如何连接hadoop集群？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何获取当前工作目录?">如何获取当前工作目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getWorkingDirectory</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何更改当前工作目录？">如何更改当前工作目录？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">setWorkingDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>如果目录不存在setWorkingDirectory()返回-1,如果执行成功，返回0</p>
+<h3 id="如何判断某个文件/目录是否存在？">如何判断某个文件/目录是否存在？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">pathExists</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>文件/目录存在，返回0，如果不存在，返回-1</p>
+<h3 id="如何创建一个目录?">如何创建一个目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">createDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>如果目录已经存在，则返回-1，如果目录创建成功，返回0</p>
+<h3 id="如何获得当前默认块大小？">如何获得当前默认块大小？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getDefaultBlockSize</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何获得当期目录下的文件/目录？">如何获得当期目录下的文件/目录？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">listDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ python listdir.py</span><br><span class="line">[&#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/aaaaa', 'mGroup': 'ns-lsp',</span></span><br><span class="line"> <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>', <span class="string">'mLastAccess</span>': <span class="number">0</span>,</span><br><span class="line"> <span class="string">'mLastMod</span>': <span class="number">1245998859</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/baike',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246010093</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/cjj',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246335743</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/cjj1',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246335136</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/image',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1245999023</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/maochang',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246276821</span>&#125;]</span><br></pre></td></tr></table></figure>
+<p>listDirectory返回的是一个含有字典元素的列表，每个字典包含如见键：</p>
+<ul>
+<li>mName: 文件/目录名</li>
+<li>mGroup: 组名</li>
+<li>mSize: 若是目录，大小为0，若为文件，大小是实际大小。</li>
+<li>mOwner: 所用者</li>
+<li>mReplication: 复制份数</li>
+<li>mBlockSize: 块大小，若是目录，大小为0</li>
+<li>mKind: 类型，Directory代表目录，File代表文件</li>
+<li>mLastAccess: 最近访问时间，若是目录，显示0</li>
+<li>mLastMod: 最近修改时间</li>
+</ul>
+<h3 id="如何获得当前HDFS的总容量?">如何获得当前HDFS的总容量?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getCapacity</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python getcapacity<span class="class">.py</span></span><br><span class="line"><span class="number">11685016256512</span></span><br></pre></td></tr></table></figure>
+<p>返回的是字节单位，即总10T空间。</p>
+<h3 id="如何获得当前文件的总大小?">如何获得当前文件的总大小?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getUsed</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何拷贝一个文件/目录?">如何拷贝一个文件/目录?</h3><p>同一HDFS内拷贝文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">copy</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>不同HDFS之间拷贝文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target_fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">copy</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>,target_fs)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何移动一个文件/目录?">如何移动一个文件/目录?</h3><p>同一HDFS内移动文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">move</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>不同HDFS之间移动文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target_fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">move</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>,target_fs)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何删除一个文件/目录?">如何删除一个文件/目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">delete</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj_new"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何重命名一个文件/目录?">如何重命名一个文件/目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">rename</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj1"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何修改一个文件/目录的权限?">如何修改一个文件/目录的权限?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">chmod</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="number">7</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何文件块所在的服务器名?">如何文件块所在的服务器名?</h3><p>有时我们需要查找某些文件块所在的服务器名是什么，可以如下使用:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getHosts</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj/a"</span>,<span class="number">0</span>,<span class="number">1</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>返回包含服务器名的列表.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python gethosts<span class="class">.py</span></span><br><span class="line">[<span class="string">'xxxx'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="如何获取一个文件/目录的信息?">如何获取一个文件/目录的信息?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">pathinfo = fs.<span class="function"><span class="title">getPathInfo</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>getPathInfo()返回一个hdfsFileInfo类。</p>
+<h3 id="如何指定文件的备份数?">如何指定文件的备份数?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">setReplication</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj/a"</span>,<span class="number">3</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何打开一个文件，并读取数据?">如何打开一个文件，并读取数据?</h3><p>要操作文件，需要创建一个HadoopFile对象，并利用read()方法读取数据.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>默认read()不带参数的话，读取32KB的数据，如果需要读1MB的数据，可以read(1024*1024), 如果需要从指定位置读取len长度的数据，可以如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">readPos</span><span class="params">(<span class="number">3</span>,<span class="number">1024</span>*<span class="number">1024</span>)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何向文件中写入数据?">如何向文件中写入数据?</h3><p>使用write()方法。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="string">"Hello World\n"</span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,False)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">write</span><span class="params">(data)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">write</span><span class="params">()</span></span>方法使用前，确保HadoopFile的初始化方法的第二个参数是False, 代表文件打开模式，支持写.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="如何获得当前文件的字节数?">如何获得当前文件的字节数?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,False)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">available</span><span class="params">()</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python getavailable<span class="class">.py</span></span><br><span class="line"><span class="number">2144090985</span></span><br></pre></td></tr></table></figure>
+<h3 id="如何在文件中偏移地址?">如何在文件中偏移地址?</h3><p>接下来，我们看一个简单例子，在一个空文件中输入”hello World”，打印输出”World”，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="string">"Hello World\n"</span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,False)</span></span></span><br><span class="line">ret = fh.<span class="function"><span class="title">write</span><span class="params">(data)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,True)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">seek</span><span class="params">(<span class="number">6</span>)</span></span>  </span><br><span class="line">print fh.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python wrexample<span class="class">.py</span></span><br><span class="line">World</span><br></pre></td></tr></table></figure>
+<p>由于HDFS上读写文件需要使用不同的参数模式，所以需要分两步进行。HadoopFile第二各参数是False时可以写操作，为True是可以进行读操作,更多信息请参考函数文档。</p>
+<h2 id="如何反馈问题?">如何反馈问题?</h2><p>如果您遇到任何使用问题，或者是任何改进建议，可以发邮件给 yzcaijunjie@gmail.com</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/12/19/apache2-plus-mysql5-plus-php5-an-zhuang-bei-wang/">Apache2+MySql5+php5 安装备忘</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/12/17/batch-import-jie-shao/">batch-import 介绍</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2012/12/18/pyhdfs-jie-shao/"
+               data-title="Pyhdfs 介绍" data-url="http://yoursite.com/2012/12/18/pyhdfs-jie-shao/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://s.gravatar.com/avatar/53c3d892d0935783834ecc9db9c26dfc?s=80" alt="vbarter" />
+          <p class="site-author-name">vbarter</p>
+        </div>
+        <p class="site-description motion-element">点点滴滴，天道酬勤</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/vbarter" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/vbarter" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pyhdfs是什么?"><span class="nav-number">1.</span> <span class="nav-text">pyhdfs是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyhdfs和libhdfs的关系"><span class="nav-number">2.</span> <span class="nav-text">pyhdfs和libhdfs的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要pyhdfs?"><span class="nav-number">3.</span> <span class="nav-text">为什么需要pyhdfs?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何获取安装?"><span class="nav-number">4.</span> <span class="nav-text">如何获取安装?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyhdfs和libhdfs的使用区别"><span class="nav-number">5.</span> <span class="nav-text">pyhdfs和libhdfs的使用区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyhdfs的使用说明"><span class="nav-number">6.</span> <span class="nav-text">pyhdfs的使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何连接hadoop集群？"><span class="nav-number">6.1.</span> <span class="nav-text">如何连接hadoop集群？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获取当前工作目录?"><span class="nav-number">6.2.</span> <span class="nav-text">如何获取当前工作目录?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何更改当前工作目录？"><span class="nav-number">6.3.</span> <span class="nav-text">如何更改当前工作目录？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何判断某个文件/目录是否存在？"><span class="nav-number">6.4.</span> <span class="nav-text">如何判断某个文件/目录是否存在？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何创建一个目录?"><span class="nav-number">6.5.</span> <span class="nav-text">如何创建一个目录?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获得当前默认块大小？"><span class="nav-number">6.6.</span> <span class="nav-text">如何获得当前默认块大小？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获得当期目录下的文件/目录？"><span class="nav-number">6.7.</span> <span class="nav-text">如何获得当期目录下的文件/目录？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获得当前HDFS的总容量?"><span class="nav-number">6.8.</span> <span class="nav-text">如何获得当前HDFS的总容量?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获得当前文件的总大小?"><span class="nav-number">6.9.</span> <span class="nav-text">如何获得当前文件的总大小?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何拷贝一个文件/目录?"><span class="nav-number">6.10.</span> <span class="nav-text">如何拷贝一个文件/目录?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何移动一个文件/目录?"><span class="nav-number">6.11.</span> <span class="nav-text">如何移动一个文件/目录?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何删除一个文件/目录?"><span class="nav-number">6.12.</span> <span class="nav-text">如何删除一个文件/目录?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何重命名一个文件/目录?"><span class="nav-number">6.13.</span> <span class="nav-text">如何重命名一个文件/目录?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何修改一个文件/目录的权限?"><span class="nav-number">6.14.</span> <span class="nav-text">如何修改一个文件/目录的权限?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何文件块所在的服务器名?"><span class="nav-number">6.15.</span> <span class="nav-text">如何文件块所在的服务器名?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获取一个文件/目录的信息?"><span class="nav-number">6.16.</span> <span class="nav-text">如何获取一个文件/目录的信息?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何指定文件的备份数?"><span class="nav-number">6.17.</span> <span class="nav-text">如何指定文件的备份数?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何打开一个文件，并读取数据?"><span class="nav-number">6.18.</span> <span class="nav-text">如何打开一个文件，并读取数据?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何向文件中写入数据?"><span class="nav-number">6.19.</span> <span class="nav-text">如何向文件中写入数据?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何获得当前文件的字节数?"><span class="nav-number">6.20.</span> <span class="nav-text">如何获得当前文件的字节数?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在文件中偏移地址?"><span class="nav-number">6.21.</span> <span class="nav-text">如何在文件中偏移地址?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何反馈问题?"><span class="nav-number">7.</span> <span class="nav-text">如何反馈问题?</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">vbarter</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"vbarter"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

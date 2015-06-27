@@ -1,0 +1,1374 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="点点滴滴，天道酬勤" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      baidu: '3d497527feb7a379c4f7e2940b92caa1',
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript" src="/js/analytics_baidu-analytics.js"></script>
+
+
+
+  <title> vbarter's blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">vbarter's blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+  <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/07/18/bian-ma-qi-shou/">
+                编码起手
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2013-07-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/c/">c++</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/07/18/bian-ma-qi-shou/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/18/bian-ma-qi-shou/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>最近在尝试使用一种简单的c++编码套路，这里称为编码套路，是指特定的程序结构，编码风格。就好比练武，需要起手套路。这种套路在生产项目中带来的好处是，结构清晰，代码易于维护。</p>
+<h1 id="起手一">起手一</h1><p>所有的类，无特殊情况，都设置成单实例，如下：</p>
+<pre><code>ifndef  \__FRAME_H_
+define  \__FRAME_H_
+include &lt;iostream&gt;
+
+<span class="class"><span class="keyword">class</span> <span class="title">Frame</span>
+</span>{ 
+<span class="keyword">private</span>:
+  <span class="keyword">static</span> Frame\* s\_frame;
+<span class="keyword">public</span>:
+  <span class="keyword">static</span> Frame\* get\_instance(); 
+  Frame();
+  \~Frame();
+  <span class="function"><span class="keyword">int</span> <span class="title">run</span><span class="params">()</span></span>; 
+  <span class="function"><span class="keyword">int</span> <span class="title">init</span><span class="params">()</span></span>;
+  <span class="function"><span class="keyword">int</span> <span class="title">stop</span><span class="params">()</span></span>;
+};
+
+define g\_pFrame (Frame::get\_instance())
+
+endif  //\_\_FRAME\_H\_
+</code></pre><p>g_pFrame就指向这个单实例，整个工程生命周期内都只有一个实例。init()方法用来初始化，比如设置配置参数，run()方法用来执行具体的逻辑过程。stop()用来停止逻辑过程，回收相关类的资源。</p>
+<p>Frame.cpp结构如下：</p>
+<pre><code>include &lt;<span class="keyword">Frame</span>.h&gt;
+
+<span class="keyword">Frame</span>\* <span class="keyword">Frame</span>::s\_frame = NULL; 
+<span class="keyword">Frame</span>::<span class="keyword">Frame</span>() <span class="list">{}</span>;
+<span class="keyword">Frame</span>::\~<span class="keyword">Frame</span>() <span class="list">{}</span>;
+//单一实例
+<span class="keyword">Frame</span>\* <span class="keyword">Frame</span>::get\_instance() <span class="list">{
+  if (s\_frame == NULL) {
+    s\_frame = new Frame();
+  }</span>
+  return s\_frame;
+}
+
+int <span class="keyword">Frame</span>::run() <span class="list">{
+//do something
+}</span>
+
+int <span class="keyword">Frame</span>::init() <span class="list">{
+//do something
+}</span>
+
+int <span class="keyword">Frame</span>::stop() <span class="list">{
+//do something
+}</span>
+</code></pre><h1 id="起手二">起手二</h1><p>定义好每个类的结构后，看看如何把类串起来，如下图：</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-18/qishou.jpg" alt="主函数调用结构"></p>
+<p>（1）main主函数中启动直接调用g_pFrame进行init初始化，这里对三个示例class单实例进行初始化，具体生产中可以对做比如解析命令行参数，解析配置文件，日志系统初始化，本地目录环境初始化等等。</p>
+<p>（2）执行init后，开始执行run方法，涉及到多线程程序，可以pthread_create来创建多个线程处理，每个线程负责不同的事情，可以调用不同的实例run()函数。</p>
+<p>（3）main_loop() 是主线程的处理逻辑，比如需要后台一不定期的干点什么脏活累活，可以在这里进行处理。</p>
+<p>（4）最后调用stop()结束回收相关资源，当然g_pFrame->stop()中可以调用其他单实例的stop()来释放资源。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/07/16/boostxue-xi-cong-0kai-shi/">
+                Boost学习从0开始
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2013-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/c-boost/">c++ boost</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/07/16/boostxue-xi-cong-0kai-shi/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/16/boostxue-xi-cong-0kai-shi/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>生产应用中，如果不用一个强有力的框架，裸写全部的功能，那很容易就迷失了，一来效率低下，二来你需要考虑的细节非常之多，三来真的浪费生命。这段时间很清闲，那就让自己静心点，学个框架吧，从boost开始。 boost是一套比较强大的c++工具库，先从boost.asio开始学习了解，boost.asio是一套系统编程接口，在网络编程方面被使用较多。</p>
+<p>boost::asio提供两种常用的编程操作：同步和异步。</p>
+<h1 id="同步操作的示例过程">同步操作的示例过程</h1><p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-16/boost1.jpg" alt="同步处理过程"></p>
+<p>首先需要定义一个<code>io_service</code>，<code>io_serviece</code>表示你的程序和操作系统的I/O服务之间的连接</p>
+<pre><code><span class="rule"><span class="attribute">boost</span>:<span class="value">:asio::io\_service io\_service</span></span>;
+</code></pre><p>程序中还需要一个执行I/O操作的I/O对象，比如TCP Socket</p>
+<pre><code>boost::asio::ip::tcp::<span class="function">socket <span class="title">socket</span><span class="params">(io\_service)</span></span>;
+</code></pre><p>当同步的一个连接操作触发时，将发生下面的事件：</p>
+<p>（1）程序调用I/O对象来初始化连接操作</p>
+<p>（2）I/O对象转发请求给io_service</p>
+<p>（3）io_service调用系统调用来处理这个连接操作</p>
+<p>（4）系统调用返回结果给io_service</p>
+<p>（5）io_service将获得的错误结果信息封装到<code>boost::system::error_code</code>，error_code或许是一个特定的值，或许是一个布尔值，比如false代表没有错误发生。</p>
+<p>（6）当操作失败时，I/O对象将抛出一个一个<code>boost::system::system_error</code>异常，这里可以看到error_code能获得错误返回，system_error也能获得错误返回，那么该使用哪一个呢？boost中可以这样来使用方法：</p>
+<pre><code><span class="rule"><span class="attribute">boost</span>:<span class="value">:system::error\_code ec</span></span>;
+<span class="tag">socket</span><span class="class">.connect</span>(<span class="tag">server</span>\_<span class="tag">endpoint</span>, <span class="tag">ec</span>);
+</code></pre><p>如果connect时设置了error_code，那么将不会再抛出异常，直接使用error_code即可。</p>
+<pre><code><span class="keyword">socket</span>.<span class="keyword">connect</span>(server\_endpoint);
+</code></pre><h1 id="异步操作的示例过程">异步操作的示例过程</h1><p>异步和同步的执行过程是不一样的，如下图</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-16/boost2.jpg" alt="异步处理过程1"></p>
+<p>（1）程序调用I/O对象来初始化连接操作</p>
+<pre><code>socket.async<span class="command">\_</span>connect(server<span class="command">\_</span>endpoint, your<span class="command">\_</span>completion<span class="command">\_</span>handler);
+</code></pre><p>这里的<code>your_completion_handler</code>是一个函数或者函数对象，如：</p>
+<pre><code><span class="keyword">void</span> your\_completion\_handler(<span class="keyword">const</span> boost::system::error\_code&amp; ec);
+</code></pre><p>（2）I/O对象将请求转发给io_service</p>
+<p>（3）io_service为系统调用提供一个信号通知，以便它能异步处理连接操作。</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-16/boost3.jpg" alt="异步处理过程2"></p>
+<p>（4）系统调用通过在一个队列中标记结果状态来表示连接操作已经完成，可以由io_service来接手。</p>
+<p>（5）程序需要调用<code>io_service::run()</code>函数以便可以获取系统调用的通知，当异步操作没有结束返回时，<code>io_service::run()</code>的调用会阻塞住，所以当启动异步操作时，需要尽快调用<code>run()</code>函数。</p>
+<p>（6）当调用执行到<code>run()</code>函数时，io_service将从队列中获取结果，先用error_code来解释，然后将它传递给调用函数your_compltion_handler.</p>
+<h1 id="同步的时间demo">同步的时间demo</h1><pre><code>include &lt;iostream&gt;
+include &lt;boost/asio.hpp&gt;
+include &lt;boost/<span class="keyword">date_t</span>ime/<span class="keyword">posix_t</span>ime/<span class="keyword">posix_t</span>ime.hpp&gt;
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>
+</span>{
+boost::asio::io_service io;
+boost::asio::<span class="keyword">deadline_t</span><span class="function">imer <span class="title">t</span><span class="params">(io, boost::posix_time::seconds(5)</span>)</span>;
+t.wait();
+<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!\n"</span>;
+<span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>执行wait后，等待seconds秒后，再打印输出”Hello World”. 这里有一点需要注意，<code>boost::posix_time::seconds</code>设置了一个Timer，在5秒后expire，这个Timer，可以认为是全局的，如果在一个已经expire后，再次调用wait()，会很快返回。不再等待5秒。</p>
+<h1 id="异步的时间demo">异步的时间demo</h1><pre><code>include &lt;iostream&gt;
+include &lt;boost/asio.hpp&gt;
+include &lt;boost/<span class="keyword">date_t</span>ime/<span class="keyword">posix_t</span>ime/<span class="keyword">posix_t</span>ime.hpp&gt;
+
+<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> boost::system::error_code&amp; <span class="comment">/*e*/</span>)</span>
+</span>{
+<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!\n"</span>;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>
+</span>{
+boost::asio::io_service io;
+boost::asio::<span class="keyword">deadline_t</span><span class="function">imer <span class="title">t</span><span class="params">(io, boost::posix_time::seconds(5)</span>)</span>;
+t.async_wait(&amp;print);
+io.run();
+<span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>等待5秒以后，触发print函数，这里的触发就是异步调用。如果改造如下代码：</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span>
+<span class="preprocessor">#<span class="keyword">include</span> &lt;boost/asio.hpp&gt;</span>
+<span class="preprocessor">#<span class="keyword">include</span> &lt;boost/date_time/posix_time/posix_time.hpp&gt;</span>
+
+<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> boost::system::error_code&amp; <span class="comment">/*e*/</span>)</span>
+</span>{
+    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!\n"</span>;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>
+</span>{
+    boost::asio::io_service io;
+
+    <span class="keyword">int</span> i = <span class="number">0</span>;  
+    <span class="keyword">while</span> (i++ &lt; <span class="number">3</span>) {     
+        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"i: "</span> &lt;&lt; i &lt;&lt; <span class="built_in">std</span>::endl;
+        boost::asio::<span class="keyword">deadline_t</span><span class="function">imer <span class="title">t</span><span class="params">(io, boost::posix_time::seconds(5)</span>)</span>;
+        t.async_wait(&amp;print);     
+        io.run();  
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>循环三次，结果是”Hello World”只触发了一次，原因是上面将到的Timer已经expire，不会再触发调用print.</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/06/23/wo-de-mei-gu-kai-hu-jing-yan/">
+                我的美股开户经验
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2013-06-23
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/06/23/wo-de-mei-gu-kai-hu-jing-yan/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/23/wo-de-mei-gu-kai-hu-jing-yan/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>答应诸老师，吴军他们本周要交差一个美股开户的的经验作业，其实早在半年前就开通了账号，开始做的时候心态比较平和，不管有赚没赚，反正就1000美金, 就当学习，好吧，废话不多说，我尽量回忆下当时开账户的全过程。</p>
+<h2 id="券商选择">券商选择</h2><p>美股也有券商，与国内A股的那些中信证劵等类似，提供股票买卖的平台，我大致知道的有两家，FirstTrade和Sogotrade，这些券商不同于国内的券商，最大的不同是提供完善的网络服务平台，让我们这些小人物有机会买上一两股苹果、谷歌的股票，当回股东，过过瘾。</p>
+<p>Firsttrade我记得是每次交易，不管多少股，手续费是6美金多，Sogotrade据说是有100次免费交易机会，过后是3美金，但我发现我13年2月份后就开始收3美金了，根本没用满100次买卖机会，可能跟时间有管。</p>
+<p>最后，我选择了Sogotrade，他们有中文页面，容易操作，下面我大致说下如何在Sogotrade上开户。</p>
+<h2 id="材料准备">材料准备</h2><p>开户前需要准备好个人基本材料，以及Sogotrade会让你填写的表格，全部材料只有一样W-8BEN原件需要邮件方式寄回美国，其他材料可以扫描，然后邮件方式寄给Sogotrade。记得所有的文件要书写清晰，最好用黑色笔，因为扫描件，可能会模糊，我当中就需要New Account Application Form比较模糊，来来回回沟通了好几次，所幸最后是通过了。</p>
+<ul>
+<li><p>身份证，双面都需要扫描</p>
+</li>
+<li><p>水电费的扫描件，用以证明你的住址，需要拿最近一个月的水电费的清单，上面必须要有你的家庭住址。并且需要自己的名字，少了这两样，都不行。</p>
+</li>
+<li><p>email, 准备好自己的email，不能填错，很多关键信息都要用邮件，建议最好使用gmail。</p>
+</li>
+<li><p>[Sogotrade提供的表格] New Account Application Form &amp; Customer Agreement (新帐户申请表格)，<a href="http://pan.baidu.com/share/link?shareid=4255368709&amp;uk=4093999606" target="_blank" rel="external">下载地址</a></p>
+</li>
+<li><p>[Sogotrade提供的表格] Margin Agreement (融资帐户申请书，如您申请的帐户为融资帐户，请见附件)，<a href="http://pan.baidu.com/share/link?shareid=4252278459&amp;uk=4093999606" target="_blank" rel="external">下载地址</a></p>
+</li>
+<li><p>[Sogotrade提供的表格] 中华人民共和国居民身份证的翻译样本，这个是一个表格，需要填写。<a href="http://pan.baidu.com/share/link?shareid=4282139160&amp;uk=4093999606" target="_blank" rel="external">下载地址</a></p>
+</li>
+</ul>
+<h2 id="在线注册">在线注册</h2><p>Sogotrade提供在线服务，在网站上先注册个账号吧，</p>
+<p>（1）整个申请流程如下，注意这是网上申请，完了你还的填写上面那些表格。然后再邮件发给Sogotrade</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-06-23/%E6%B3%A8%E5%86%8C%E6%B5%81%E7%A8%8B.jpg" alt="申请流程"></p>
+<p>（2）打开如下页面，开始第一步申请，可以填写网页上语言，改成中文简体。</p>
+<p><a href="https://apply.sogotrade.com/NewAccountSetup/Step1.aspx" target="_blank" rel="external">申请页面</a></p>
+<p>表格需要用英文填写，</p>
+<p>（3）</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-06-23/1.jpg" alt="注册页面1"></p>
+<p>全部用英文填写，家庭地址如果不知道英文，就用汉语拼音吧。</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-06-23/2.jpg" alt="注册页面2"></p>
+<blockquote>
+<p>账户类型： 个人账号</p>
+<p>账户特性：融资股票交易</p>
+<p>用户id：就是你将来登陆Sogotrade的id，务必记住。</p>
+</blockquote>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-06-23/3.jpg" alt="注册页面3"></p>
+<blockquote>
+<p>账户安全设置：这里随便你输入</p>
+<p>登陆安全PIN码：这个同样重要，记住你的第一次输入，后续每次账号登陆时需要输入</p>
+</blockquote>
+<p>后续的表格填写就不截图了，照着说明填写完整，就好了。</p>
+<p>注册完成中，你会收到一份邮件：<code>“SogoTrade帐户申请接收”</code>， 然后就等待Sogotrade给你开通账户吧，一般一两天就可以完成。我记得还可以登陆你的账号看你的申请进度。</p>
+<h2 id="提交材料">提交材料</h2><p>在线注册完成后，你会收到一封Sogotrade发给你的邮件，提示你需要开始提交材料，材料就是包括上面准备的部分，一个都不能少，这个部分的材料需要先从网上下载，下载后然后再打印出来，填写好，然后再扫描进去，可以保存成jpeg的格式，也可以保存成pdf的格式，填写好后，打个压缩包传给Sogotrade即可，Sogotrade的邮件地址你在网上注册结束后可以看到。</p>
+<p>如果需要样稿，邮件发给你们。</p>
+<p>以下是我当时填写表格Sogotrade提醒我注意的地方：</p>
+<blockquote>
+<p>New Account Application(新帐户申请书)</p>
+<p>(1) 请在Account Name填上您的姓名</p>
+<p>(2) Date Of Birth请填写您的出生年月日。请遵照月/日/年填写。</p>
+<p>(3) 请使用英文书写您的住家地址。</p>
+<p>(4) 请在Number Of Dependents 填写您的抚养人数</p>
+<p>(5) 请在If No, What Country上填写 China</p>
+<p>(6) Home Telephone请填写住家电话</p>
+<p>(7) Business Telephone请填写公司电话</p>
+<p>(8) Employer请填写公司名称（若无业，请填写Unemployed并且填上您的资金来源。自营业-请填写Self-Employed）</p>
+<p>(9) Years Employed请填写就业年资</p>
+<p>(10) Position请填写职称</p>
+<p>(11) Business Address请填写公司地址</p>
+<p>(12) 银行资讯请用英文填写。</p>
+</blockquote>
+<p>最后W-8BEN材料原件需要邮寄给Sogotrade公司，我当时采用的是UPS快读，200多大洋，基本一二天就能到，很快，多人一起送，算来还便宜点。</p>
+<p>Sogotrade的地址是：</p>
+<blockquote>
+<p>SogoTrade - Division of Wang Investments</p>
+<p>1 McBride and Son Center Drive, Suite 288</p>
+<p>Chesterfield, MO 63005</p>
+<p>Attention: New Account Department</p>
+</blockquote>
+<h2 id="开始向账户汇款">开始向账户汇款</h2><p>所有的材料都交齐后，最后一步就等待Sogotrade帮你开通账号了,邮件名是<code>&quot;Trading is now permitted in your SogoTrade account&quot;</code>，我前前后后大概20多天，漫长的等待。账号开通后，就剩下账户汇款了，汇款就是往Sogotrade账户中打钱，这样你才有钱买卖美股。有两种方式，电汇和支票，我们选择电汇</p>
+<p>为了汇1000美金，我前前后后跑了不下5趟银行，最后选择了招商银行，我个人认为招行的服务是最好的，没有之一。</p>
+<p>这个汇款，需要分两步骤，先购汇，然后再转账，在国内，银行明确不建议你私人向私人汇美金，所以到了银行，柜台问你是对私人，还是对公司，千万记住说对公司，我为此被光大赶出来三次。</p>
+<p>到了银行照电汇单子来填写，不懂的地方可以问下客服人员，Sogotrade给的相关内容可以<a href="http://pan.baidu.com/share/link?shareid=89666193&amp;uk=4093999606" target="_blank" rel="external">参考这里</a></p>
+<p>填写好后，排队吧，到了柜台后，首先对柜台人员说，你是对国外公司进行电汇，不要在乎她对你的收款人是个人的怀疑，你强调是公司即可，风险个人承担，电汇手续费我依稀记得三部分：</p>
+<p>（1）手续费</p>
+<p>（2）电汇费用</p>
+<p>（3）中间费用，当时银行给我解释是钱会到国外第三方机构，然后再中转到Sogorade指定的账户上，会产生一个中间费用。</p>
+<p>三者加起来，汇1000美金，需要人民币400左右，贵呀~</p>
+<p>最后等待吧，估计3-4天后，Sogotrade就能收到，直接登陆你的账户就能看到你的余额。</p>
+<p>最后说一句，炒股有风险，不要期望太高，享受乐趣最重要，Good Lucky!</p>
+<p>欢迎大家一起交流</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/26/batch-importer-neo4j-pi-liang-dao-ru-gong-ju/">
+                Batch-Importer Neo4j 批量导入工具
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2012-12-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/neo4j-batch-importer/">neo4j batch-importer</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2012/12/26/batch-importer-neo4j-pi-liang-dao-ru-gong-ju/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/26/batch-importer-neo4j-pi-liang-dao-ru-gong-ju/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Batch-Importer_NEO4j批量数据导入工具">Batch-Importer NEO4j批量数据导入工具</h2><p><a href="https://github.com/jexp/batch-import" target="_blank" rel="external">Batch-Importer</a>是基于<a href="https://github.com/jexp/batch-import" target="_blank" rel="external">batch-import</a>修改的<code>Neo4j (CSV) Batch Importer</code>, 原来的<a href="https://github.com/jexp/batch-import" target="_blank" rel="external">batch-import</a>使用起来有些不方便，局限性在：<code>批量导入时需要同时指定node.csv 和 relationship.csv</code>. 实际批量导入时往往会遇到如下需求：</p>
+<ul>
+<li>只批量导入节点，节点有不同的属性。</li>
+<li>只批量导入关系，关系有不同的type。</li>
+<li>只批量导入索引。</li>
+</ul>
+<p>所以做了一点修改，支持如下三种用法：</p>
+<h3 id="批量导入不同属性的节点">批量导入不同属性的节点</h3><blockquote>
+<p>java -jar batch-import.jar neo4j-db-file node node1.csv [node2.csv, …]</p>
+</blockquote>
+<ul>
+<li>例如node1.csv的格式可以如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">update_time</th>
+<th style="text-align:center">status</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> a</td>
+<td style="text-align:center">2012-12-26 16:43:52.644741</td>
+<td style="text-align:center">new</td>
+<td style="text-align:center">monitor</td>
+<td style="text-align:center">{name};{type} </td>
+</tr>
+<tr>
+<td style="text-align:center"> b</td>
+<td style="text-align:center">2012-12-26 16:43:52.645970</td>
+<td style="text-align:center">new</td>
+<td style="text-align:center">monitor</td>
+<td style="text-align:center">{name};{type} </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>例如node2.csv的格式可以如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">server_id</th>
+<th style="text-align:center">server_name</th>
+<th style="text-align:center">server_status</th>
+<th style="text-align:center">update_time</th>
+<th style="text-align:center">status</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">  154335</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">Available</td>
+<td style="text-align:center">2012-12-26 16:43:52.644741</td>
+<td style="text-align:center">new</td>
+<td style="text-align:center">服务器</td>
+<td style="text-align:center">{name};{type} </td>
+</tr>
+<tr>
+<td style="text-align:center">  125977</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">Available</td>
+<td style="text-align:center">2012-12-26 15:42:04.925568</td>
+<td style="text-align:center">new</td>
+<td style="text-align:center">服务器</td>
+<td style="text-align:center">{name};{type} </td>
+</tr>
+</tbody>
+</table>
+<h3 id="批量建立节点的索引">批量建立节点的索引</h3><blockquote>
+<p>java -jar batch-import.jar neo4j-db-file nodeindex node_index1.csv [node_index2.csv, …]</p>
+</blockquote>
+<ul>
+<li>例如nodeindex1.csv格式如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> 121742</td>
+<td style="text-align:center">机器名1 </td>
+</tr>
+<tr>
+<td style="text-align:center"> 135225</td>
+<td style="text-align:center">机器名2 </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>例如nodeindex2.csv格式如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">task_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">  121742</td>
+<td style="text-align:center">任务id1 </td>
+</tr>
+<tr>
+<td style="text-align:center">  135225</td>
+<td style="text-align:center">任务id2 </td>
+</tr>
+</tbody>
+</table>
+<h3 id="批量建立关系">批量建立关系</h3><blockquote>
+<p>java -jar batch-import.jar neo4j-db-file rel relationship1.csv [relationship1.csv, …]</p>
+</blockquote>
+<ul>
+<li>例如relationship1.csv的格式如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">start</th>
+<th style="text-align:center">end</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> 125653</td>
+<td style="text-align:center">261855</td>
+<td style="text-align:center">输出</td>
+<td style="text-align:center">输出 </td>
+</tr>
+<tr>
+<td style="text-align:center"> 36620</td>
+<td style="text-align:center">261900</td>
+<td style="text-align:center">输出</td>
+<td style="text-align:center">输出 </td>
+</tr>
+<tr>
+<td style="text-align:center"> 31858</td>
+<td style="text-align:center">261867</td>
+<td style="text-align:center">属于</td>
+<td style="text-align:center">属于 </td>
+</tr>
+<tr>
+<td style="text-align:center"> 4358</td>
+<td style="text-align:center">2373545</td>
+<td style="text-align:center">发布</td>
+<td style="text-align:center">发布 </td>
+</tr>
+</tbody>
+</table>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/19/apache2-plus-mysql5-plus-php5-an-zhuang-bei-wang/">
+                Apache2+MySql5+php5 安装备忘
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2012-12-19
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/apache5-mysql5-php5/">apache5 mysql5 php5</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2012/12/19/apache2-plus-mysql5-plus-php5-an-zhuang-bei-wang/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/19/apache2-plus-mysql5-plus-php5-an-zhuang-bei-wang/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>好记性不如烂笔头，遇到时耗费的时间又是如此长，记录下安装过程吧</p>
+<p>（1）先安装apache2</p>
+<p>```<br>./configure —prefix=/home/work/local/apache2 —enable-so —with-mpm=worker</p>
+<p>make &amp; make install<br>```</p>
+<p>（2）安装mysql5</p>
+<p>```<br>./configure —prefix=/home/work/local/mysql5 —with-charset=gbk —with-extra-charsets=all —enable-thread-safe-client</p>
+<p>make &amp; make install<br>```</p>
+<p><code>--enable-thread-safe-client</code>参数是为了与php5配合，否则php5不能安装mysql扩展</p>
+<p>（3）安装zlib</p>
+<p>```<br>./configure —prefix=/home/work/local/zlib<br>```</p>
+<p>configure之后，需要修改下Makefile文件</p>
+<p>```<br>CFLAGS=-O3 -DUSE_MMAP -fPIC<br>```</p>
+<p>这样，可以避免出现如下错误：</p>
+<p>```<br>zlib/lib/libz.a: could not read symbols: Bad value<br>```</p>
+<p>然后再</p>
+<p>```<br>make &amp; make install<br>```</p>
+<p>（4）下载安装curl</p>
+<p>```<br>./configure —prefix=/home/work/local/curl</p>
+<p>make &amp; make install<br>```</p>
+<p>（5）编译安装php</p>
+<p>安装curl是为了使其支持curl特性，编译参数如下：</p>
+<p>```<br>./configure —prefix=/home/work/local/php5 —with-mysql=/home/work/local/mysql5/ —with-apxs2=/home/work/local/apache2/bin/apxs —enable-sockets —enable-soap —enable-bcmath —enable-shmop —enable-calendar —enable-pcntl —enable-ftp —with-xmlrpc —with-openssl —with-curl=/home/work/local/curl —with-config-file-path=/home/work/local/php5/etc —with-zlib-dir=/home/work/local/zlib/</p>
+<p>make &amp; make install</p>
+<p>cp php.ini-production /home/work/local/php5/etc/php.ini<br>```</p>
+<p><code>---with-config-file-path</code>是执行<code>php.ini</code>的路径，安装完后可以拷贝一份<code>php.ini-production</code>到<code>---with-config-file-path</code>下面。</p>
+<p>（6）编译curl扩展</p>
+<p>```<br>cd php源码/ext/curl</p>
+<p>phpize</p>
+<p>./configure —with-curl=/home/work/local/curl</p>
+<p>make<br>```</p>
+<p>make 之后，会产生curl.so文件，网上说需要拷贝到php扩展的目录，但我实际尝试不需要拷贝。拷贝后提示curl.so不是兼容的php library</p>
+<p>（7）编辑php.ini，加载扩展</p>
+<p>```<br>extension_dir = “/home/work/local/apache2/modules/“<br>```</p>
+<p>（8）查看php是否已支持curl</p>
+<p>```<br>php -m | grep curl<br>```</p>
+<p>显示<code>curl</code> 说明已经安装完成</p>
+<p>（9）一些php安装的详情信息查看方式</p>
+<p>```<br>php -i<br>```</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/18/pyhdfs-jie-shao/">
+                Pyhdfs 介绍
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2012-12-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/hadoop-hdfs-python/">hadoop hdfs python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2012/12/18/pyhdfs-jie-shao/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/18/pyhdfs-jie-shao/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>开源一个和hadoop相关的python lib，希望能更多的人收益。</p>
+<h2 id="pyhdfs是什么?">pyhdfs是什么?</h2><p>pyhdfs是对libhdfs的python封装库. 它提供了一些常用方法来处理HDFS上的文件和目录, 比如读写文件, 枚举目录文件, 显示HDFS可用空间, 显示文件的复制块数等</p>
+<h2 id="pyhdfs和libhdfs的关系">pyhdfs和libhdfs的关系</h2><p>libhdfs 是HDFS的底层C函数库, 由hadoop官方提供, pyhdfs使用swig技术, 对libhdfs提供的绝大多数函数进行了封装, 目的是提供更简单的调用方式.</p>
+<h2 id="为什么需要pyhdfs?">为什么需要pyhdfs?</h2><p>hadoop 集群提供我们计算和存储, 计算基于map/reduce模式, 存储基于HDFS, 所有的文件都存储在HDFS中, 虽然有HDFS Shell可以简单访问HDFS的文件,其灵活性不如访问本地文件系统. 比如过滤一些具有日期格式的文件名,并把他们归类压缩打包, 在HDFS上的某文件中更改某行内容等等, 光靠HDFS Shell就显得不方便了. 本文将介绍另外一种方法, 不需要挂载VFS, 通过脚本调用HDFS底层接口, 直接访问HDFS上的文件. 这就是pyhdfs的功能.</p>
+<h2 id="如何获取安装?">如何获取安装?</h2><ul>
+<li><p>git clone <a href="https://github.com/vbarter/pyhdfs.git" target="_blank" rel="external">https://github.com/vbarter/pyhdfs.git</a></p>
+</li>
+<li><p>先编译安装swig, 最新版本是2.0.9</p>
+</li>
+<li><p>可不安装pcre（perl的正则表达库）</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.<span class="regexp">/configure --prefix=/</span>home<span class="regexp">/work/</span>opdir<span class="regexp">/software/</span>swig --without-pcre</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改pyhdfs下的Makefile</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">50</span>行，LIBHDFS_BUILD_DIR 修改为发布地址</span><br><span class="line"><span class="number">55</span>行，<span class="keyword">python</span>依赖修改</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行compile.sh</p>
+</li>
+</ul>
+<h2 id="pyhdfs和libhdfs的使用区别">pyhdfs和libhdfs的使用区别</h2><p>为了说明pyhdfs和libhdfs的难易区别, 下面请看一个列子,两种方法实现读取一个目录下所有的文件名信息.</p>
+<p>libhdfs:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "hdfs.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">      dfsFS fs = hdfsConnectAsUser(<span class="string">"hadoop ugi"</span>,<span class="number">64310</span>,<span class="string">"username"</span>,<span class="string">"password"</span>);</span><br><span class="line"></span><br><span class="line">      hdfsFileInfo *fileList = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> numEntries = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">if</span>((fileList = hdfsListDirectory(fs, <span class="string">"/user/ns-lsp/logs/"</span>, &amp;numEntries)) != NULL) &#123;</span><br><span class="line">           <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">for</span>(i=<span class="number">0</span>; i &lt; numEntries; ++i) &#123;</span><br><span class="line">                     <span class="built_in">printf</span>(<span class="string">"Name: %s, "</span>, fileList[i].mName);</span><br><span class="line">           &#125;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno) &#123;</span><br><span class="line">                     totalResult++;</span><br><span class="line">                     <span class="built_in">printf</span>(<span class="string">"waah! hdfsListDirectory - FAILED!\n"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     <span class="built_in">printf</span>(<span class="string">"Empty directory!\n"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">           &#125;</span><br><span class="line">      hdfsDisconnect(fs);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>pyhdfs:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import hadoop</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"hadoop ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">    ds = fs.<span class="function"><span class="title">listDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">    <span class="keyword">for</span> <span class="tag">i</span> <span class="keyword">in</span> ds:</span><br><span class="line">        print <span class="tag">i</span><span class="class">.mName</span></span><br><span class="line">    fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>从上看出, pyhdfs比起libhdfs使用更加简单,  也许有人会说, 利用hadoop fs -ls /user/ns-lsp/logs 同样可以显示出所有的文件,不是更加简单么? 但是如果我要在某些特定文件比如20090630的文件中写入”finish”字符串, 就比较麻烦了.</p>
+<h2 id="pyhdfs的使用说明">pyhdfs的使用说明</h2><p>下面,对pyhdfs中提供的所有方法进行示例说明, pyhdfs模块主要包含了两个类,.<br>一个是HadoopDFS, 提供了对HDFS的访问处理函数, 包括:</p>
+<ul>
+<li>connect(): 连接函数</li>
+<li>disconnect(): 断开连接</li>
+<li>getCapacity(): 取得文件系统的容量</li>
+<li>getUsed(): 取得当前文件系统的文件总大小</li>
+<li>getWorkingDirectory(): 获得当前工作目录</li>
+<li>setWorkingDirectory(): 设置当前工作目录</li>
+<li>createDirectory(): 创建一个目录</li>
+<li>copy(): 拷贝一个文件/目录</li>
+<li>move(): 移动一个文件/目录</li>
+<li>delete(): 删除一个文件/目录</li>
+<li>rename(): 重命名一个文件/目录</li>
+<li>listDirectory(): 显示目录下的所有文件/目录</li>
+<li>pathExists(): 判断目录是否存在</li>
+<li>getDefaultBlockSize(): 获得默认文件块大小.</li>
+<li>chmod(): 改变文件/目录权限</li>
+<li>chown(): 设置文件/目录属主</li>
+<li>getHosts(): 获得当前块所在的具体服务器名</li>
+<li>getPathInfo(): 获得文件/路径信息</li>
+<li>setReplication(): 设置文件/路径的复制数</li>
+</ul>
+<p>另一个是HadoopFile, 提供了对HDFS中文件的访问处理函数. 包括：</p>
+<ul>
+<li><strong>init</strong>(): 初始化一个文件，并打开</li>
+<li>close(): 关闭一个文件</li>
+<li>read(): 从文件中读取数据</li>
+<li>readPos(): 从文件的指定位置读取len长度数据</li>
+<li>write(): 写数据到文件</li>
+<li>flush(): 输出数据</li>
+<li>seek(): 偏移到文件的指定位置</li>
+<li>tell(): 获得当前偏移位置</li>
+<li>available(): 获取当前文件可读字节数</li>
+</ul>
+<p>下面分别介绍:</p>
+<h3 id="如何连接hadoop集群？">如何连接hadoop集群？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何获取当前工作目录?">如何获取当前工作目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getWorkingDirectory</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何更改当前工作目录？">如何更改当前工作目录？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">setWorkingDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>如果目录不存在setWorkingDirectory()返回-1,如果执行成功，返回0</p>
+<h3 id="如何判断某个文件/目录是否存在？">如何判断某个文件/目录是否存在？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">pathExists</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>文件/目录存在，返回0，如果不存在，返回-1</p>
+<h3 id="如何创建一个目录?">如何创建一个目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">createDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>如果目录已经存在，则返回-1，如果目录创建成功，返回0</p>
+<h3 id="如何获得当前默认块大小？">如何获得当前默认块大小？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getDefaultBlockSize</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何获得当期目录下的文件/目录？">如何获得当期目录下的文件/目录？</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">listDirectory</span><span class="params">(<span class="string">"/user/ns-lsp/logs"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ python listdir.py</span><br><span class="line">[&#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/aaaaa', 'mGroup': 'ns-lsp',</span></span><br><span class="line"> <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>', <span class="string">'mLastAccess</span>': <span class="number">0</span>,</span><br><span class="line"> <span class="string">'mLastMod</span>': <span class="number">1245998859</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/baike',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246010093</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/cjj',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246335743</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/cjj1',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246335136</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/image',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1245999023</span>&#125;, &#123;<span class="string">'mName</span>': <span class="string">'hdfs</span>:<span class="comment">//ugi:64310/user/ns-lsp/logs/maochang',</span></span><br><span class="line"> <span class="string">'mGroup</span>': <span class="string">'ns</span>-lsp', <span class="string">'mSize</span>': <span class="number">0</span>, <span class="string">'mOwner</span>': <span class="string">'ns</span>-lsp', <span class="string">'mReplication</span>': <span class="number">1</span>, <span class="string">'mBlockSize</span>': <span class="number">0</span>, <span class="string">'mKind</span>': <span class="string">'Directory</span>',</span><br><span class="line"> <span class="string">'mLastAccess</span>': <span class="number">0</span>, <span class="string">'mLastMod</span>': <span class="number">1246276821</span>&#125;]</span><br></pre></td></tr></table></figure>
+<p>listDirectory返回的是一个含有字典元素的列表，每个字典包含如见键：</p>
+<ul>
+<li>mName: 文件/目录名</li>
+<li>mGroup: 组名</li>
+<li>mSize: 若是目录，大小为0，若为文件，大小是实际大小。</li>
+<li>mOwner: 所用者</li>
+<li>mReplication: 复制份数</li>
+<li>mBlockSize: 块大小，若是目录，大小为0</li>
+<li>mKind: 类型，Directory代表目录，File代表文件</li>
+<li>mLastAccess: 最近访问时间，若是目录，显示0</li>
+<li>mLastMod: 最近修改时间</li>
+</ul>
+<h3 id="如何获得当前HDFS的总容量?">如何获得当前HDFS的总容量?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getCapacity</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python getcapacity<span class="class">.py</span></span><br><span class="line"><span class="number">11685016256512</span></span><br></pre></td></tr></table></figure>
+<p>返回的是字节单位，即总10T空间。</p>
+<h3 id="如何获得当前文件的总大小?">如何获得当前文件的总大小?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getUsed</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何拷贝一个文件/目录?">如何拷贝一个文件/目录?</h3><p>同一HDFS内拷贝文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">copy</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>不同HDFS之间拷贝文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target_fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">copy</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>,target_fs)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何移动一个文件/目录?">如何移动一个文件/目录?</h3><p>同一HDFS内移动文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">move</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>不同HDFS之间移动文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target_fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">move</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj_new"</span>,target_fs)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何删除一个文件/目录?">如何删除一个文件/目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">delete</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj_new"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何重命名一个文件/目录?">如何重命名一个文件/目录?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">rename</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="string">"/user/ns-lsp/logs/cjj1"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何修改一个文件/目录的权限?">如何修改一个文件/目录的权限?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">chmod</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>,<span class="number">7</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何文件块所在的服务器名?">如何文件块所在的服务器名?</h3><p>有时我们需要查找某些文件块所在的服务器名是什么，可以如下使用:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">getHosts</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj/a"</span>,<span class="number">0</span>,<span class="number">1</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>返回包含服务器名的列表.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python gethosts<span class="class">.py</span></span><br><span class="line">[<span class="string">'xxxx'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="如何获取一个文件/目录的信息?">如何获取一个文件/目录的信息?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">pathinfo = fs.<span class="function"><span class="title">getPathInfo</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj"</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>getPathInfo()返回一个hdfsFileInfo类。</p>
+<h3 id="如何指定文件的备份数?">如何指定文件的备份数?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">print fs.<span class="function"><span class="title">setReplication</span><span class="params">(<span class="string">"/user/ns-lsp/logs/cjj/a"</span>,<span class="number">3</span>)</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何打开一个文件，并读取数据?">如何打开一个文件，并读取数据?</h3><p>要操作文件，需要创建一个HadoopFile对象，并利用read()方法读取数据.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>默认read()不带参数的话，读取32KB的数据，如果需要读1MB的数据，可以read(1024*1024), 如果需要从指定位置读取len长度的数据，可以如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">readPos</span><span class="params">(<span class="number">3</span>,<span class="number">1024</span>*<span class="number">1024</span>)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="如何向文件中写入数据?">如何向文件中写入数据?</h3><p>使用write()方法。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="string">"Hello World\n"</span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,False)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">write</span><span class="params">(data)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">write</span><span class="params">()</span></span>方法使用前，确保HadoopFile的初始化方法的第二个参数是False, 代表文件打开模式，支持写.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="如何获得当前文件的字节数?">如何获得当前文件的字节数?</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,False)</span></span></span><br><span class="line">print fh.<span class="function"><span class="title">available</span><span class="params">()</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python getavailable<span class="class">.py</span></span><br><span class="line"><span class="number">2144090985</span></span><br></pre></td></tr></table></figure>
+<h3 id="如何在文件中偏移地址?">如何在文件中偏移地址?</h3><p>接下来，我们看一个简单例子，在一个空文件中输入”hello World”，打印输出”World”，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="string">"Hello World\n"</span></span><br><span class="line">fs = hadoop.<span class="function"><span class="title">HadoopDFS</span><span class="params">(<span class="string">"username"</span>,<span class="string">"password"</span>,<span class="string">"ugi"</span>,<span class="number">64310</span>)</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,False)</span></span></span><br><span class="line">ret = fh.<span class="function"><span class="title">write</span><span class="params">(data)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fh = hadoop.<span class="function"><span class="title">HadoopFile</span><span class="params">(fs,<span class="string">'/user/ns-lsp/logs/cjj/a'</span>,True)</span></span></span><br><span class="line">fh.<span class="function"><span class="title">seek</span><span class="params">(<span class="number">6</span>)</span></span>  </span><br><span class="line">print fh.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">fh.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">fs.<span class="function"><span class="title">disconnect</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python wrexample<span class="class">.py</span></span><br><span class="line">World</span><br></pre></td></tr></table></figure>
+<p>由于HDFS上读写文件需要使用不同的参数模式，所以需要分两步进行。HadoopFile第二各参数是False时可以写操作，为True是可以进行读操作,更多信息请参考函数文档。</p>
+<h2 id="如何反馈问题?">如何反馈问题?</h2><p>如果您遇到任何使用问题，或者是任何改进建议，可以发邮件给 yzcaijunjie@gmail.com</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/17/batch-import-jie-shao/">
+                batch-import 介绍
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2012-12-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/neo4j-batch-import/">neo4j batch-import</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2012/12/17/batch-import-jie-shao/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/17/batch-import-jie-shao/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="batch-import_介绍">batch-import 介绍</h2><p>neo4j中提供两种数据导入方式，基于<code>restful api</code>方式和<code>neo4j db</code>文件操作方式。文件操作会比较快，但是对于大数据量，比如百万级别的节点关系添加时需要批量导入方法，batch-import就是一个有用的批量导入开源工具。</p>
+<h2 id="batch-import_安装">batch-import 安装</h2><p>(1) 首先需要下载Maven，直接下载binary即可运行<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/www.apache.org/dyn</span><span class="regexp">/closer.cgi/maven</span><span class="regexp">/maven-3/</span><span class="number">3.0</span>.<span class="number">4</span>/binaries/apache-maven-<span class="number">3.0</span>.<span class="number">4</span>-bin.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>(2) 解压后配置 ~/.bash_profile<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> MAVEN_HOME=/home/work/caijunjie/apache-maven</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$MAVEN_HOME</span>/bin</span><br></pre></td></tr></table></figure></p>
+<p>(3) 最后再进行编译<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean compile <span class="keyword">assembly</span>:<span class="built_in">single</span></span><br></pre></td></tr></table></figure></p>
+<p>(4) 开始使用<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar batch-import-jar-with-dependencies<span class="class">.jar</span> dbname node<span class="class">.csv</span> relationship.csv</span><br></pre></td></tr></table></figure></p>
+<h2 id="注意">注意</h2><ul>
+<li><p>如果懒的编译或者无法编译成功，也可以直接下载github中的已编译好的jar包，然后如下安装</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/downloads/jexp/batch-<span class="built_in">import</span>/batch-<span class="built_in">import</span>-jar-<span class="keyword">with</span>-dependencies.jar</span><br><span class="line"></span><br><span class="line">mvn install:install-file <span class="variable">-DgroupId=</span>org.neo4j <span class="variable">-DartifactId=</span>neo4j-kernel <span class="variable">-Dversion=</span><span class="number">1.9</span>-SNAPSHOT <span class="variable">-Dpackaging=</span>jar <span class="variable">-Dfile=</span>../batch-<span class="built_in">import</span>-jar-<span class="keyword">with</span>-dependencies.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用batch-import-master时非常要注意，不能操作一个正在提供服务的db，如何判断，只要检查db下是否存在lock文件即可</p>
+</li>
+<li><p>batch-import-jar-with-dependencies.jar有些限制，比如它必须同时指定<code>node.csv</code>和<code>relationship.csv</code>，如果节点属性不同的情况，这个工具就不能处理了。</p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://s.gravatar.com/avatar/53c3d892d0935783834ecc9db9c26dfc?s=80" alt="vbarter" />
+          <p class="site-author-name">vbarter</p>
+        </div>
+        <p class="site-description motion-element">点点滴滴，天道酬勤</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/vbarter" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/vbarter" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">vbarter</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"vbarter"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="点点滴滴，天道酬勤" />
+
+
+
+  <meta name="keywords" content="swift," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      baidu: '3d497527feb7a379c4f7e2940b92caa1',
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript" src="/js/analytics_baidu-analytics.js"></script>
+
+
+
+  <title> 重温swift // vbarter's blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">vbarter's blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              重温swift
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-14
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/14/重温swift/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/14/重温swift/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>Apple开发一直是个梦想，又是好几个月没有碰了，今天重新拿起一个具体工程项目<a href="https://github.com/demon1105/PinterestSwift" target="_blank" rel="external">PinterestSwift</a>进行学习。 现在Swift已经到了1.2， 先从语法开始。扫了下整个工程代码，记录如下补充学习：</p>
+<p>（1）在Swift1.2 中，向上转化(upcast)、向下转化(downcast)时用到as关键词，需要在后面加上问号(?)，或者感叹号(!)，这样编译时就能得到提示。 </p>
+<blockquote>
+<p>1.2以前没有这个功能，所以转化错误时，只能在运行期间发现。 </p>
+</blockquote>
+<p>（2）1.2中，NSString是无法自动转化为String的，需要加上as String </p>
+<p>（3）swift中的Protocol所有的方法都必须实现，这点和Cocoa中的有不同，那么如何在wsift中定义像Object-c中一样的可选方法呢？ 答案就是加入@objc 关键词， 比如： </p>
+<pre><code><span class="preprocessor">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">OptionalProtocol</span> </span>{ optional <span class="func"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span> } 
+</code></pre><p>需要注意的是，这里的optionalMethod()方法是可选的，因为前面有optional关键词，如果没有这个词，那么这个方法还是必须被实现。且这个OptionalProtocol协议必须被Class实现，不能被struct或者Enum来实现。 </p>
+<p>（4）layoutSubviews()方法何时被调用？ </p>
+<ul>
+<li>init初始化不会触发layoutSubviews </li>
+<li>addSubview会触发layoutSubviews </li>
+<li>设置view的Frame会触发layoutSubviews，当然前提是frame的值设置前后发生了变化 </li>
+<li>滚动一个UIScrollView会触发layoutSubviews </li>
+<li>旋转Screen会触发父UIView上的layoutSubviews事件 </li>
+<li>改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件 </li>
+</ul>
+<p>（5）Swift是自动管理内存的，当我们创建一个对象是，swift会自动增加引用计数，当我们释放一个对象时，swift会自动减小引用计算，所有自动管理内存都由会一个问题，循环引用（retain Cycle）。比如如下： </p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>{ 
+    <span class="keyword">let</span> b: <span class="type">B</span> 
+    <span class="keyword">init</span>() { 
+        b = <span class="type">B</span>() 
+        b.a = <span class="keyword">self</span> 
+    } 
+
+    <span class="keyword">deinit</span> { 
+        <span class="built_in">println</span>(<span class="string">"A deinit"</span>) 
+    } 
+} 
+
+<span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>{ 
+    <span class="keyword">var</span> a: <span class="type">A</span>? = <span class="literal">nil</span> 
+    <span class="keyword">deinit</span> { 
+        <span class="built_in">println</span>(<span class="string">"B deinit"</span>) 
+    } 
+} 
+</code></pre><p>上述就是一个典型的循环引用，A初始化时会创建B，同时让B引用A。A和B相互引用。这样当第三方调用时，引用计数永远不会减小。造成循环引用。如何来避免呢？ </p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>{ 
+    <span class="keyword">weak</span> <span class="keyword">var</span> a: <span class="type">A</span>? = <span class="literal">nil</span> 
+    <span class="keyword">deinit</span> { 
+        <span class="built_in">println</span>(<span class="string">"B deinit"</span>) 
+    } 
+} 
+</code></pre><p>在B中弱引用A，这样当有删除A时，B会优先告诉内存管理，我不再引用A了。 </p>
+<p>一般的用法，未delegate属性设置一个weak属性 </p>
+<p>（6）<strong>willSet{}</strong>是在属性被存储之前调用，<strong>didSet{}</strong>是在属性被存储之后调用。 </p>
+<p>（7）在类中，可以在init初始化方法中为一个常量赋值，这是重要的一个特性，比如： </p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>{ 
+    let numA: Int 
+    init(<span class="built_in">num</span>: Int) { 
+        numA = <span class="built_in">num</span> 
+    } 
+} 
+
+<span class="class"><span class="keyword">class</span> <span class="title">ClassB</span>: <span class="title">ClassA</span> </span>{ 
+    let numB: Int 
+
+    override init(<span class="built_in">num</span>: Int) { 
+        numB = <span class="built_in">num</span> + <span class="number">1</span> 
+        <span class="keyword">super</span>.init(<span class="built_in">num</span>: <span class="built_in">num</span>) 
+    } 
+} 
+</code></pre><p>如果想让子类务必实现一个init方法，可以强制required关键词。 required关键词的作用如下： </p>
+<ul>
+<li>只能修饰类的初始化方法，init </li>
+<li>父类中有required修饰的init()时，子类也有多态的init()时， 必须重载父类init，否则编译错误。 </li>
+<li>如果子类中没有init，那么可以不需要重载父类的init </li>
+</ul>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/swift/"> #swift </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/14/swift学习-二/">swift学习(二)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/31/迁移至hexo/">迁移至hexo</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/06/14/重温swift/"
+               data-title="重温swift" data-url="http://yoursite.com/2015/06/14/重温swift/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://s.gravatar.com/avatar/53c3d892d0935783834ecc9db9c26dfc?s=80" alt="vbarter" />
+          <p class="site-author-name">vbarter</p>
+        </div>
+        <p class="site-description motion-element">点点滴滴，天道酬勤</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/vbarter" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/vbarter" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">vbarter</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"vbarter"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

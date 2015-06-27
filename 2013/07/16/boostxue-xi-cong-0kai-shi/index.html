@@ -1,0 +1,629 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="点点滴滴，天道酬勤" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      baidu: '3d497527feb7a379c4f7e2940b92caa1',
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript" src="/js/analytics_baidu-analytics.js"></script>
+
+
+
+  <title> Boost学习从0开始 // vbarter's blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">vbarter's blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Boost学习从0开始
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2013-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/c-boost/">c++ boost</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/07/16/boostxue-xi-cong-0kai-shi/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/16/boostxue-xi-cong-0kai-shi/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>生产应用中，如果不用一个强有力的框架，裸写全部的功能，那很容易就迷失了，一来效率低下，二来你需要考虑的细节非常之多，三来真的浪费生命。这段时间很清闲，那就让自己静心点，学个框架吧，从boost开始。 boost是一套比较强大的c++工具库，先从boost.asio开始学习了解，boost.asio是一套系统编程接口，在网络编程方面被使用较多。</p>
+<p>boost::asio提供两种常用的编程操作：同步和异步。</p>
+<h1 id="同步操作的示例过程">同步操作的示例过程</h1><p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-16/boost1.jpg" alt="同步处理过程"></p>
+<p>首先需要定义一个<code>io_service</code>，<code>io_serviece</code>表示你的程序和操作系统的I/O服务之间的连接</p>
+<pre><code><span class="rule"><span class="attribute">boost</span>:<span class="value">:asio::io\_service io\_service</span></span>;
+</code></pre><p>程序中还需要一个执行I/O操作的I/O对象，比如TCP Socket</p>
+<pre><code>boost::asio::ip::tcp::<span class="function">socket <span class="title">socket</span><span class="params">(io\_service)</span></span>;
+</code></pre><p>当同步的一个连接操作触发时，将发生下面的事件：</p>
+<p>（1）程序调用I/O对象来初始化连接操作</p>
+<p>（2）I/O对象转发请求给io_service</p>
+<p>（3）io_service调用系统调用来处理这个连接操作</p>
+<p>（4）系统调用返回结果给io_service</p>
+<p>（5）io_service将获得的错误结果信息封装到<code>boost::system::error_code</code>，error_code或许是一个特定的值，或许是一个布尔值，比如false代表没有错误发生。</p>
+<p>（6）当操作失败时，I/O对象将抛出一个一个<code>boost::system::system_error</code>异常，这里可以看到error_code能获得错误返回，system_error也能获得错误返回，那么该使用哪一个呢？boost中可以这样来使用方法：</p>
+<pre><code><span class="rule"><span class="attribute">boost</span>:<span class="value">:system::error\_code ec</span></span>;
+<span class="tag">socket</span><span class="class">.connect</span>(<span class="tag">server</span>\_<span class="tag">endpoint</span>, <span class="tag">ec</span>);
+</code></pre><p>如果connect时设置了error_code，那么将不会再抛出异常，直接使用error_code即可。</p>
+<pre><code><span class="keyword">socket</span>.<span class="keyword">connect</span>(server\_endpoint);
+</code></pre><h1 id="异步操作的示例过程">异步操作的示例过程</h1><p>异步和同步的执行过程是不一样的，如下图</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-16/boost2.jpg" alt="异步处理过程1"></p>
+<p>（1）程序调用I/O对象来初始化连接操作</p>
+<pre><code>socket.async<span class="command">\_</span>connect(server<span class="command">\_</span>endpoint, your<span class="command">\_</span>completion<span class="command">\_</span>handler);
+</code></pre><p>这里的<code>your_completion_handler</code>是一个函数或者函数对象，如：</p>
+<pre><code><span class="keyword">void</span> your\_completion\_handler(<span class="keyword">const</span> boost::system::error\_code&amp; ec);
+</code></pre><p>（2）I/O对象将请求转发给io_service</p>
+<p>（3）io_service为系统调用提供一个信号通知，以便它能异步处理连接操作。</p>
+<p><img src="http://stampfriend.b0.upaiyun.com/caijunjie-blog/2013-07-16/boost3.jpg" alt="异步处理过程2"></p>
+<p>（4）系统调用通过在一个队列中标记结果状态来表示连接操作已经完成，可以由io_service来接手。</p>
+<p>（5）程序需要调用<code>io_service::run()</code>函数以便可以获取系统调用的通知，当异步操作没有结束返回时，<code>io_service::run()</code>的调用会阻塞住，所以当启动异步操作时，需要尽快调用<code>run()</code>函数。</p>
+<p>（6）当调用执行到<code>run()</code>函数时，io_service将从队列中获取结果，先用error_code来解释，然后将它传递给调用函数your_compltion_handler.</p>
+<h1 id="同步的时间demo">同步的时间demo</h1><pre><code>include &lt;iostream&gt;
+include &lt;boost/asio.hpp&gt;
+include &lt;boost/<span class="keyword">date_t</span>ime/<span class="keyword">posix_t</span>ime/<span class="keyword">posix_t</span>ime.hpp&gt;
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>
+</span>{
+boost::asio::io_service io;
+boost::asio::<span class="keyword">deadline_t</span><span class="function">imer <span class="title">t</span><span class="params">(io, boost::posix_time::seconds(5)</span>)</span>;
+t.wait();
+<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!\n"</span>;
+<span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>执行wait后，等待seconds秒后，再打印输出”Hello World”. 这里有一点需要注意，<code>boost::posix_time::seconds</code>设置了一个Timer，在5秒后expire，这个Timer，可以认为是全局的，如果在一个已经expire后，再次调用wait()，会很快返回。不再等待5秒。</p>
+<h1 id="异步的时间demo">异步的时间demo</h1><pre><code>include &lt;iostream&gt;
+include &lt;boost/asio.hpp&gt;
+include &lt;boost/<span class="keyword">date_t</span>ime/<span class="keyword">posix_t</span>ime/<span class="keyword">posix_t</span>ime.hpp&gt;
+
+<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> boost::system::error_code&amp; <span class="comment">/*e*/</span>)</span>
+</span>{
+<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!\n"</span>;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>
+</span>{
+boost::asio::io_service io;
+boost::asio::<span class="keyword">deadline_t</span><span class="function">imer <span class="title">t</span><span class="params">(io, boost::posix_time::seconds(5)</span>)</span>;
+t.async_wait(&amp;print);
+io.run();
+<span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>等待5秒以后，触发print函数，这里的触发就是异步调用。如果改造如下代码：</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span>
+<span class="preprocessor">#<span class="keyword">include</span> &lt;boost/asio.hpp&gt;</span>
+<span class="preprocessor">#<span class="keyword">include</span> &lt;boost/date_time/posix_time/posix_time.hpp&gt;</span>
+
+<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> boost::system::error_code&amp; <span class="comment">/*e*/</span>)</span>
+</span>{
+    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!\n"</span>;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>
+</span>{
+    boost::asio::io_service io;
+
+    <span class="keyword">int</span> i = <span class="number">0</span>;  
+    <span class="keyword">while</span> (i++ &lt; <span class="number">3</span>) {     
+        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"i: "</span> &lt;&lt; i &lt;&lt; <span class="built_in">std</span>::endl;
+        boost::asio::<span class="keyword">deadline_t</span><span class="function">imer <span class="title">t</span><span class="params">(io, boost::posix_time::seconds(5)</span>)</span>;
+        t.async_wait(&amp;print);     
+        io.run();  
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>循环三次，结果是”Hello World”只触发了一次，原因是上面将到的Timer已经expire，不会再触发调用print.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/07/18/bian-ma-qi-shou/">编码起手</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/06/23/wo-de-mei-gu-kai-hu-jing-yan/">我的美股开户经验</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2013/07/16/boostxue-xi-cong-0kai-shi/"
+               data-title="Boost学习从0开始" data-url="http://yoursite.com/2013/07/16/boostxue-xi-cong-0kai-shi/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://s.gravatar.com/avatar/53c3d892d0935783834ecc9db9c26dfc?s=80" alt="vbarter" />
+          <p class="site-author-name">vbarter</p>
+        </div>
+        <p class="site-description motion-element">点点滴滴，天道酬勤</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/vbarter" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/vbarter" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#同步操作的示例过程"><span class="nav-number">1.</span> <span class="nav-text">同步操作的示例过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异步操作的示例过程"><span class="nav-number">2.</span> <span class="nav-text">异步操作的示例过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同步的时间demo"><span class="nav-number">3.</span> <span class="nav-text">同步的时间demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异步的时间demo"><span class="nav-number">4.</span> <span class="nav-text">异步的时间demo</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">vbarter</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"vbarter"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
