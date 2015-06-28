@@ -634,9 +634,9 @@ a.<span class="keyword">method</span>()
 
       
         
-          <p>几年前使用octopress，一款用ruby写的静态博客系统，可以方便的部署在github上，第一次碰到时被它简单所吸引。但每次安装配置octopress，真是要命，在mac上的高版本Ruby总是有问题，需要依赖1.9.3版本的Ruby，安装很不顺利。 </p>
-<p>今天看到<a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>，基于node.js写的静态博客系统，使用起来比octopress方便不少，果断迁移过去。 </p>
-<p>具体的安装部署方法： </p>
+          <p>几年前使用octopress，一款用ruby写的静态博客系统，可以方便的部署在github上，第一次碰到时被它简单所吸引。但每次安装配置octopress，真是要命，在mac上的高版本Ruby总是有问题，需要依赖1.9.3版本的Ruby，安装很不顺利。</p>
+<p>今天看到<a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>，基于node.js写的静态博客系统，使用起来比octopress方便不少，果断迁移过去。</p>
+<p>具体的安装部署方法：</p>
 <ul>
 <li>首先需要安装Node.js。 点击这里<a href="https://nodejs.org/" target="_blank" rel="external">下载</a></li>
 <li>下载安装hexo</li>
@@ -679,6 +679,7 @@ a.<span class="keyword">method</span>()
 <p>deploy:<br>  type: git<br>  repository: <a href="https://github.com/vbarter/vbarter.github.io.git" target="_blank" rel="external">https://github.com/vbarter/vbarter.github.io.git</a><br>  branch: master</p>
 </blockquote>
 <p>最后可以设置自己域名绑定github page上，需要注意的是一定确保分支下有CNAME设定好自己的域名</p>
+<p>从测试来看，绑定自定义域名时，需要建立gh-pages分支，CNAME文件放在gh-pages分支下面，提交更新时需要push到master分支。这样在静态页面上可以正常显示</p>
 
         
       
