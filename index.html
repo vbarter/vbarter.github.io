@@ -130,6 +130,94 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/28/Celery-MR-实现弹性分布式计算/">
+                Celery + MR 实现分布式任务处理
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-28
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/28/Celery-MR-实现弹性分布式计算/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/28/Celery-MR-实现弹性分布式计算/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>最近在工作中遇到需要大量执行耗时任务的需求, 使用Celery可以轻松构建这样的任务处理系统. Celery + MR的思想是将Worker以Map的方式提交到Hadoop平台上去运行, 这样实现的好处有:</p>
+<ul>
+<li>无需单独维护运行worker的节点.</li>
+<li>较容易实现节点弹性扩展，设置运行Map的Capacity数，即可控制运行的节点数目.</li>
+<li>自动容错，重启。map运行异常退出，可由JobTracker来重新分配节点运行Worker.</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">hadoop streaming -<span class="tag">input</span> <span class="string">"$input"</span> \</span><br><span class="line">                 -output <span class="string">"$output"</span> \</span><br><span class="line">                 -inputformat org<span class="class">.apache</span><span class="class">.hadoop</span><span class="class">.mapred</span><span class="class">.lib</span><span class="class">.NLineInputFormat</span>  \</span><br><span class="line">                 -outputformat org<span class="class">.apache</span><span class="class">.hadoop</span><span class="class">.mapred</span><span class="class">.TextOutputFormat</span> \</span><br><span class="line">                 -mapper <span class="string">"sh mapred.sh"</span> \</span><br><span class="line">                 -reducer <span class="string">"cat"</span> \</span><br><span class="line">                 -jobconf mapred<span class="class">.job</span><span class="class">.name</span>=<span class="string">"Celery Worker Cluster"</span> \</span><br><span class="line">                 -jobconf hadoop<span class="class">.job</span><span class="class">.ugi</span>=<span class="string">"$hadoop_user,$hadoop_passwd"</span> \</span><br><span class="line">                 -jobconf mapred<span class="class">.map</span><span class="class">.tasks</span><span class="class">.speculative</span><span class="class">.execution</span>=false \</span><br><span class="line">                 -jobconf mapred<span class="class">.reduce</span><span class="class">.tasks</span><span class="class">.speculative</span><span class="class">.execution</span>=false \</span><br><span class="line">                 -jobconf mapred<span class="class">.line</span><span class="class">.input</span>,format.linespermap=<span class="string">"1"</span> \</span><br><span class="line">                 -jobconf mapred<span class="class">.map</span><span class="class">.capacity</span><span class="class">.per</span><span class="class">.tasktracker</span>=<span class="number">1</span> \</span><br><span class="line">                 -jobconf mapred<span class="class">.job</span><span class="class">.map</span><span class="class">.capacity</span>=<span class="string">"200"</span> \</span><br><span class="line">                 -cacheArchive <span class="string">"/path/python2.7.tar.gz#python2.7"</span> \</span><br><span class="line">                 -file <span class="string">"./mapred.sh"</span> \</span><br><span class="line">                 -file <span class="string">"./CeleryWorker.tar.gz"</span> \</span><br><span class="line">                 -numReduceTasks <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>mapred.sh是map启动脚本.</li>
+<li>CeleryWorker.tar.gz就是Celery的Worker工程.</li>
+<li>input是一个文件.</li>
+<li>InputFormat以行形式读取, 每次读一行. 这样就可以控制一行数据启动一个map.</li>
+<li>设置的Capacity为200, 表示同时启动200个Map, 也就是200个Worker.</li>
+<li>另外由于Celery是单独的Python Lib, 需要提供在平台上运行我们自己Python解释器, 这里用-cacheArchive参数来指定, 该解释器内已安装好了Celery框架.</li>
+<li>reduce设为1， 无需运行Reduce.</li>
+<li>map启动时执行了mapred.sh脚本.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line">tar zxvf CeleryWorker.tar.gz</span><br><span class="line"><span class="built_in">exec</span> ./python2.<span class="number">7</span>/python2.<span class="number">7</span>/bin/python ./python2.<span class="number">7</span>/python2.<span class="number">7</span>/bin/celery -A CeleryWorker worker <span class="operator">-l</span> info -P eventlet -c <span class="number">100</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>解压Celery的Worker工程.</li>
+<li>以gavent的方式启动worker, 最大并发是100.</li>
+</ul>
+<p>充分利用集群资源，需要增加worker时，设定capacity。worker工程变更时，重启MR任务。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/27/Atom/">
                 Atom
               </a>
@@ -987,117 +1075,6 @@ a.<span class="keyword">method</span>()
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/07/24/sentry-c-slash-c-plus-plus-client/">
-                sentry c/c++ client
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2013-07-24
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/c/">c++</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2013/07/24/sentry-c-slash-c-plus-plus-client/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/24/sentry-c-slash-c-plus-plus-client/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>sentry是一个python实现的开源信息收集服务，为它实现了一个c/c++客户端<a href="https://github.com/vbarter/sentry-cpp" target="_blank" rel="external">sentry-cpp</a>，这样就可以在c++工程中把信息发送给sentry.</p>
-<p>sentry-cpp is a c/c++ client for <a href="https://getsentry.com" target="_blank" rel="external">Sentry</a></p>
-<pre><code><span class="preprocessor"><span class="keyword">include</span> &lt;Sentry.h&gt;</span>
-
-int main<span class="params">(int argc, char\*\* argv)</span> 
-{
-<span class="comment">//Instantiate a new client with a compatible DSN</span>
-SENTRY.init<span class="params">(<span class="string">"http://public:secret@example.com/1"</span>)</span>;
-<span class="comment">//only title</span>
-SENTRY.error<span class="params">(<span class="string">"title"</span>)</span>;
-<span class="comment">//title and message</span>
-SENTRY.info<span class="params">(<span class="string">"title"</span>,<span class="string">"message"</span>)</span>;
-<span class="comment">//send extra data</span>
-Json::Value extra;
-SENTRY.info<span class="params">(<span class="string">"title"</span>,<span class="string">"message"</span>,&amp;extra)</span>;
-}
-</code></pre><h1 id="Dependence">Dependence</h1><p>before you use sentry-cpp, you need install the following libraries.</p>
-<ol>
-<li><p><a href="http://jsoncpp.sourceforge.net/" target="_blank" rel="external">Jsoncpp</a></p>
-</li>
-<li><p><a href="http://curl.haxx.se/libcurl/" target="_blank" rel="external">libcurl</a></p>
-</li>
-</ol>
-<h1 id="Install">Install</h1><p>next, you need edit the Makefile, and change the path for json-cpp and libcurl, now you can</p>
-<pre><code><span class="built_in">make</span>
-</code></pre><p>it will generate static library(.a) and share library(.so), you can use sentry-cpp in three ways:</p>
-<ol>
-<li><p>use source code, only Sentry.cpp and Sentry.h</p>
-</li>
-<li><p>use shared object</p>
-</li>
-<li><p>use static object</p>
-</li>
-</ol>
-<p>Enjoy!</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1136,7 +1113,7 @@ SENTRY.info<span class="params">(<span class="string">"title"</span>,<span class
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1150,7 +1127,7 @@ SENTRY.info<span class="params">(<span class="string">"title"</span>,<span class
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">标签</span>
               
           </div>

@@ -130,6 +130,117 @@
           
           
             
+              <a class="post-title-link" href="/2013/07/24/sentry-c-slash-c-plus-plus-client/">
+                sentry c/c++ client
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2013-07-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/c/">c++</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/07/24/sentry-c-slash-c-plus-plus-client/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/24/sentry-c-slash-c-plus-plus-client/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>sentry是一个python实现的开源信息收集服务，为它实现了一个c/c++客户端<a href="https://github.com/vbarter/sentry-cpp" target="_blank" rel="external">sentry-cpp</a>，这样就可以在c++工程中把信息发送给sentry.</p>
+<p>sentry-cpp is a c/c++ client for <a href="https://getsentry.com" target="_blank" rel="external">Sentry</a></p>
+<pre><code><span class="preprocessor"><span class="keyword">include</span> &lt;Sentry.h&gt;</span>
+
+int main<span class="params">(int argc, char\*\* argv)</span> 
+{
+<span class="comment">//Instantiate a new client with a compatible DSN</span>
+SENTRY.init<span class="params">(<span class="string">"http://public:secret@example.com/1"</span>)</span>;
+<span class="comment">//only title</span>
+SENTRY.error<span class="params">(<span class="string">"title"</span>)</span>;
+<span class="comment">//title and message</span>
+SENTRY.info<span class="params">(<span class="string">"title"</span>,<span class="string">"message"</span>)</span>;
+<span class="comment">//send extra data</span>
+Json::Value extra;
+SENTRY.info<span class="params">(<span class="string">"title"</span>,<span class="string">"message"</span>,&amp;extra)</span>;
+}
+</code></pre><h1 id="Dependence">Dependence</h1><p>before you use sentry-cpp, you need install the following libraries.</p>
+<ol>
+<li><p><a href="http://jsoncpp.sourceforge.net/" target="_blank" rel="external">Jsoncpp</a></p>
+</li>
+<li><p><a href="http://curl.haxx.se/libcurl/" target="_blank" rel="external">libcurl</a></p>
+</li>
+</ol>
+<h1 id="Install">Install</h1><p>next, you need edit the Makefile, and change the path for json-cpp and libcurl, now you can</p>
+<pre><code><span class="built_in">make</span>
+</code></pre><p>it will generate static library(.a) and share library(.so), you can use sentry-cpp in three ways:</p>
+<ol>
+<li><p>use source code, only Sentry.cpp and Sentry.h</p>
+</li>
+<li><p>use shared object</p>
+</li>
+<li><p>use static object</p>
+</li>
+</ol>
+<p>Enjoy!</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2013/07/18/bian-ma-qi-shou/">
                 编码起手
               </a>
@@ -1231,7 +1342,7 @@ io.run();
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1245,7 +1356,7 @@ io.run();
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">标签</span>
               
           </div>
